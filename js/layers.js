@@ -11,11 +11,21 @@ function crearPopup(feature, layer) {
 }
 
 async function cargarCapa(layerConfig) {
-  const response = await fetch(`data/${layerConfig.file}`);
+  const response = await fetch(layerConfig.file);
+
+  if (!response.ok) {
+    throw new Error(`No se pudo cargar: ${layerConfig.file}`);
+  }
+
   const geojson = await response.json();
 
   const layer = L.geoJSON(geojson, {
-    style: layerConfig.style,
+    style: {
+      color: layerConfig.color,
+      fillColor: layerConfig.fillColor,
+      weight: layerConfig.weight || 1,
+      fillOpacity: layerConfig.fillOpacity ?? 0.5
+    },
     onEachFeature: crearPopup
   });
 
