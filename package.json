@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Visor geográfico de Sotaquirá migrado a React.",
+  "description": "Visor geográfico de Sotaquirá construido con React, Vite y Leaflet.",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

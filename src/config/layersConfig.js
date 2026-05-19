@@ -1,3 +1,9 @@
+const DATA_BASE_URL = `${import.meta.env.BASE_URL}data/`;
+
+function dataPath(filePath) {
+  return `${DATA_BASE_URL}${filePath}`;
+}
+
 export const MAP_CONFIG = {
   center: [5.764, -73.247],
   zoom: 11
@@ -28,7 +34,7 @@ export const PRIMARY_LAYER_NAMES = [
 export const LAYERS_CONFIG = [
   {
     name: "Límite Sotaquirá",
-    file: "/data/mapa_sotaquira.geojson",
+    file: dataPath("base/mapa_sotaquira.geojson"),
     color: "#111827",
     fillColor: "transparent",
     weight: 3,
@@ -40,7 +46,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Territorios agrícolas",
     group: "coberturas",
-    file: "/data/territorios_agricolas.geojson",
+    file: dataPath("coberturas/territorios_agricolas.geojson"),
     color: "#bfa100",
     fillColor: "#f6df6c",
     weight: 1.5,
@@ -51,7 +57,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Bosques y áreas naturales",
     group: "coberturas",
-    file: "/data/bosques_areas_naturales.geojson",
+    file: dataPath("coberturas/bosques_areas_naturales.geojson"),
     color: "#2e7d32",
     fillColor: "#388e3c",
     weight: 1.5,
@@ -62,7 +68,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Páramos",
     group: "coberturas",
-    file: "/data/Paramos.geojson",
+    file: dataPath("coberturas/paramos.geojson"),
     color: "#0097a7",
     fillColor: "#26c6da",
     weight: 2,
@@ -73,7 +79,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Montañas estructurales",
     group: "coberturas",
-    file: "/data/montañas_estructurales.geojson",
+    file: dataPath("coberturas/montanas_estructurales.geojson"),
     color: "#6d4c41",
     fillColor: "#8d6e63",
     weight: 2,
@@ -84,7 +90,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Ríos",
     group: "hidrografia",
-    file: "/data/Rios_sotaquira.geojson",
+    file: dataPath("hidrografia/rios_sotaquira.geojson"),
     color: "#1e88e5",
     fillColor: "#42a5f5",
     weight: 2,
@@ -95,7 +101,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Baja fertilidad",
     group: "riesgos",
-    file: "/data/Baja_fertilidad_sotaquira.geojson",
+    file: dataPath("riesgos/baja_fertilidad_sotaquira.geojson"),
     color: "#8e24aa",
     fillColor: "#ab47bc",
     weight: 2,
@@ -106,7 +112,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Susceptibilidad del suelo",
     group: "riesgos",
-    file: "/data/Suceptibilidad_suelo.geojson",
+    file: dataPath("riesgos/susceptibilidad_suelo.geojson"),
     color: "#fb8c00",
     fillColor: "#ff9800",
     weight: 2,
@@ -117,7 +123,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Riesgo edáfico erosión",
     group: "riesgos",
-    file: "/data/Riesgo_edafico_erosion.geojson",
+    file: dataPath("riesgos/riesgo_edafico_erosion.geojson"),
     color: "#c62828",
     fillColor: "#e53935",
     weight: 2,
@@ -128,7 +134,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Erosión climática",
     group: "riesgos",
-    file: "/data/Erosion_climatica.geojson",
+    file: dataPath("riesgos/erosion_climatica.geojson"),
     color: "#f9a825",
     fillColor: "#ffee58",
     weight: 2,
@@ -139,7 +145,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Erosión moderada",
     group: "riesgos",
-    file: "/data/Erosion_moderada.geojson",
+    file: dataPath("riesgos/erosion_moderada.geojson"),
     color: "#f4511e",
     fillColor: "#ff7043",
     weight: 2,
@@ -150,7 +156,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Erosión fuerte",
     group: "riesgos",
-    file: "/data/Erosion_fuerte.geojson",
+    file: dataPath("riesgos/erosion_fuerte.geojson"),
     color: "#b71c1c",
     fillColor: "#d32f2f",
     weight: 2,
@@ -161,7 +167,7 @@ export const LAYERS_CONFIG = [
   {
     name: "Afectación baja degradación",
     group: "riesgos",
-    file: "/data/afectacion_baja_degradacion.geojson",
+    file: dataPath("riesgos/afectacion_baja_degradacion.geojson"),
     color: "#ef5350",
     fillColor: "#ef5350",
     weight: 2,

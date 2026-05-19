@@ -7,4 +7,8 @@ import { App } from "./App.jsx";
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
-root.render(React.createElement(StrictMode, null, React.createElement(App)));
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);

@@ -1,4 +1,15 @@
 node_modules/
 dist/
+.vite/
+
+*.log
+*.tmp
+*.temp
 preview-react.png
 vite-dev.*.log
+
+.env.local
+.env.*.local
+
+.DS_Store
+Thumbs.db
