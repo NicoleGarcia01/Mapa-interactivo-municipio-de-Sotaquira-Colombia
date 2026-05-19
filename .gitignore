@@ -1,0 +1,4 @@
+node_modules/
+dist/
+preview-react.png
+vite-dev.*.log

@@ -1,90 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visor Geogr&aacute;fico Sotaquir&aacute;</title>
 
-  <title>Visor Geográfico Sotaquirá</title>
-
-  <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet/dist/leaflet.css"
-  >
-
-  <!-- Fuente -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+  <div id="root"></div>
 
-  <div class="app">
-
-    <!-- BOTÓN SIDEBAR -->
-    <button
-      id="toggleSidebar"
-      class="sidebar-toggle"
-      title="Mostrar u ocultar panel"
-    >
-      ☰
-    </button>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-
-      <div class="sidebar-content">
-
-        <div class="sidebar-header">
-
-          <h1>
-            Visor Geográfico Sotaquirá
-          </h1>
-
-          <p>
-            Consulta interactiva de capas ambientales y territoriales del municipio.
-          </p>
-
-        </div>
-
-        <!-- PANEL CAPAS -->
-        <div class="layer-panel">
-
-          <h2>Capas</h2>
-
-          <div id="layerList"></div>
-
-        </div>
-
-      </div>
-
-    </aside>
-
-    <!-- MAPA -->
-    <main id="map"></main>
-
-  </div>
-
-  <!-- Leaflet -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <!-- Scripts -->
-  <script src="js/config.js"></script>
-  <script src="js/map.js"></script>
-  <script src="js/layers.js"></script>
-  <script src="js/app.js"></script>
-
+  <script type="module" src="/src/main.js"></script>
 </body>
 
-</html> 
+</html>
