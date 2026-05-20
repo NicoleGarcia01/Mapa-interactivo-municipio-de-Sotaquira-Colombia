@@ -1,6 +1,16 @@
 import React from "react";
+import { getPopupData } from "../utils/formatProperties.js";
 
-export function PopupContent({ fields, title }) {
+export function PopupContent({ feature, fields: providedFields, layerName, popupFields, title: providedTitle }) {
+  const popupData =
+    providedFields && providedTitle
+      ? {
+          fields: providedFields,
+          title: providedTitle
+        }
+      : getPopupData(feature?.properties, layerName, popupFields);
+  const { fields, title } = popupData;
+
   return (
     <article className="popup-card">
       <h3>{title}</h3>

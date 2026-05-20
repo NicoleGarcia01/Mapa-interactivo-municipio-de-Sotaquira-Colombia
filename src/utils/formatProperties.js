@@ -92,6 +92,27 @@ function isTechnicalKey(key) {
   return TECHNICAL_KEY_PATTERNS.some(pattern => pattern.test(key));
 }
 
+function findPropertyEntry(properties, targetKey) {
+  const normalizedTargetKey = normalizeKey(targetKey);
+
+  return Object.entries(properties).find(([key]) => normalizeKey(key) === normalizedTargetKey);
+}
+
+function getConfiguredField(fieldConfig, properties) {
+  const key = typeof fieldConfig === "string" ? fieldConfig : fieldConfig?.key;
+
+  if (!key) return null;
+
+  const entry = findPropertyEntry(properties, key);
+
+  if (!entry || !isUsefulValue(entry[1])) return null;
+
+  return {
+    label: typeof fieldConfig === "object" && fieldConfig.label ? fieldConfig.label : formatLabel(entry[0]),
+    value: formatValue(entry[0], entry[1])
+  };
+}
+
 function toTitleCase(value) {
   return value
     .toLowerCase()
@@ -128,29 +149,39 @@ export function formatValue(key, value) {
   return String(value).trim();
 }
 
-export function getPopupData(properties = {}, layerName) {
+export function getPopupData(properties = {}, layerName, popupFields = []) {
   const entries = Object.entries(properties)
     .filter(([key, value]) => !isTechnicalKey(key) && isUsefulValue(value));
 
   const titleEntry = entries.find(([key]) => TITLE_KEYS.includes(normalizeKey(key)));
   const title = titleEntry ? formatValue(titleEntry[0], titleEntry[1]) : layerName;
   const titleKey = titleEntry?.[0];
+  const titleLabel = titleKey ? formatLabel(titleKey) : null;
+  const configuredFields = Array.isArray(popupFields)
+    ? popupFields
+        .map(fieldConfig => getConfiguredField(fieldConfig, properties))
+        .filter(Boolean)
+        .filter(field => !titleLabel || field.label !== titleLabel)
+    : [];
 
-  const fields = entries
-    .filter(([key]) => key !== titleKey)
-    .sort(([firstKey], [secondKey]) => {
-      const firstPriority = PRIORITY_KEYS.indexOf(normalizeKey(firstKey));
-      const secondPriority = PRIORITY_KEYS.indexOf(normalizeKey(secondKey));
-      const safeFirstPriority = firstPriority === -1 ? Number.MAX_SAFE_INTEGER : firstPriority;
-      const safeSecondPriority = secondPriority === -1 ? Number.MAX_SAFE_INTEGER : secondPriority;
+  const fields =
+    configuredFields.length > 0
+      ? configuredFields
+      : entries
+          .filter(([key]) => key !== titleKey)
+          .sort(([firstKey], [secondKey]) => {
+            const firstPriority = PRIORITY_KEYS.indexOf(normalizeKey(firstKey));
+            const secondPriority = PRIORITY_KEYS.indexOf(normalizeKey(secondKey));
+            const safeFirstPriority = firstPriority === -1 ? Number.MAX_SAFE_INTEGER : firstPriority;
+            const safeSecondPriority = secondPriority === -1 ? Number.MAX_SAFE_INTEGER : secondPriority;
 
-      return safeFirstPriority - safeSecondPriority;
-    })
-    .slice(0, 6)
-    .map(([key, value]) => ({
-      label: formatLabel(key),
-      value: formatValue(key, value)
-    }));
+            return safeFirstPriority - safeSecondPriority;
+          })
+          .slice(0, 6)
+          .map(([key, value]) => ({
+            label: formatLabel(key),
+            value: formatValue(key, value)
+          }));
 
   return {
     fields,

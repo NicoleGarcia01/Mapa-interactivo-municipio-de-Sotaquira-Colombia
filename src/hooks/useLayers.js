@@ -5,7 +5,6 @@ import L from "leaflet";
 import { PopupContent } from "../components/PopupContent.jsx";
 import { getBaseMapById } from "../config/basemapsConfig.js";
 import { LAYERS_CONFIG, MAP_CONFIG, PRIMARY_LAYER_NAMES } from "../config/layersConfig.js";
-import { getPopupData } from "../utils/formatProperties.js";
 
 function createInitialActiveLayers() {
   return LAYERS_CONFIG.reduce((activeLayers, layerConfig) => {
@@ -37,11 +36,11 @@ function setBaseMapLayer(map, baseLayerRef, currentBaseMapIdRef, baseMapId) {
 function createPopup(feature, layer, layerConfig) {
   if (!feature.properties) return;
 
-  const popupData = getPopupData(feature.properties, layerConfig.name);
   const popupHtml = renderToStaticMarkup(
     React.createElement(PopupContent, {
-      fields: popupData.fields,
-      title: popupData.title
+      feature,
+      layerName: layerConfig.name,
+      popupFields: layerConfig.popupFields
     })
   );
 
@@ -55,6 +54,7 @@ function createPopup(feature, layer, layerConfig) {
 function getLayerStyle(layerConfig) {
   return {
     color: layerConfig.color,
+    fill: layerConfig.fill ?? true,
     fillColor: layerConfig.fillColor,
     fillOpacity: layerConfig.fillOpacity ?? 0.5,
     lineCap: layerConfig.lineCap,
@@ -65,6 +65,8 @@ function getLayerStyle(layerConfig) {
 }
 
 function getPaneName(layerConfig) {
+  if (layerConfig.pane) return layerConfig.pane;
+
   const normalizedLayerName = layerConfig.name
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -85,7 +87,9 @@ function ensureLayerPane(map, layerConfig) {
 }
 
 function createFeatureInteractions(feature, layer, layerConfig) {
-  createPopup(feature, layer, layerConfig);
+  if (layerConfig.interactive !== false) {
+    createPopup(feature, layer, layerConfig);
+  }
 
   if (!layerConfig.hoverStyle || !layer.setStyle) return;
 
@@ -104,6 +108,7 @@ function createGeoJsonLayer(map, layerConfig, geojson) {
   const paneName = ensureLayerPane(map, layerConfig);
 
   return L.geoJSON(geojson, {
+    interactive: layerConfig.interactive ?? true,
     pane: paneName,
     style: getLayerStyle(layerConfig),
     onEachFeature: (feature, layer) => createFeatureInteractions(feature, layer, layerConfig)
