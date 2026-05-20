@@ -24,6 +24,11 @@ export function LayerGroup({
       >
         <span className="group-title-wrap">
           <span aria-hidden="true" className="group-chevron" />
+          <span
+            aria-hidden="true"
+            className="group-accent"
+            style={{ background: group.accentColor }}
+          />
           <span className="group-title">{group.title}</span>
         </span>
         <span className="group-count">{activeCount}/{layerCount}</span>

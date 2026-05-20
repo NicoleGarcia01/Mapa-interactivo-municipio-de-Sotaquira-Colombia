@@ -81,18 +81,28 @@ public/
 - Riesgos y erosión.
 - Límite municipal de Sotaquirá como referencia base.
 
-El proyecto no incluye capas de fauna, flora ni datos de `DataNatalia`.
-
 ## Deploy
 
-El proyecto está preparado para desplegarse en GitHub Pages, Vercel o Netlify.
+El proyecto está configurado para desplegarse en GitHub Pages desde la rama `gh-pages`.
 
-La configuración de Vite usa rutas relativas para que los assets y los GeoJSON funcionen tanto en dominios raíz como en subrutas:
+La configuración de Vite usa la ruta base pública del repositorio para que los assets y los GeoJSON funcionen correctamente en producción:
 
 ```js
 export default defineConfig({
-  base: "./"
+  base: "/Mapa-interactivo-municipio-de-Sotaquira-Colombia/"
 });
+```
+
+Para generar el build:
+
+```bash
+npm run build
+```
+
+Para publicar el contenido de `dist` en la rama `gh-pages`:
+
+```bash
+npm run deploy
 ```
 
 ## Créditos

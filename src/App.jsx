@@ -43,7 +43,7 @@ export function App() {
         type="button"
         onClick={() => setSidebarCollapsed(previousValue => !previousValue)}
       >
-        ☰
+        <span className="sidebar-toggle-icon" aria-hidden="true" />
       </button>
 
       <Sidebar

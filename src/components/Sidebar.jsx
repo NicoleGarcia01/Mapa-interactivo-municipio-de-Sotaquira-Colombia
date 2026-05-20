@@ -76,9 +76,16 @@ export function Sidebar({
     <aside className={`sidebar${collapsed ? " collapsed" : ""}`} id="sidebar">
       <div className="sidebar-content">
         <header className="sidebar-header">
-          <span className="sidebar-kicker">Sotaquirá, Boyacá</span>
-          <h1>Visor Geográfico Sotaquirá</h1>
-          <p>Consulta interactiva de capas ambientales y territoriales del municipio.</p>
+          <div className="sidebar-heading">
+            <span className="sidebar-gis-icon" aria-hidden="true">
+              <span />
+            </span>
+            <div className="sidebar-heading-text">
+              <h1>Visor Geográfico Sotaquirá</h1>
+              <span>Sotaquirá, Boyacá</span>
+            </div>
+          </div>
+          <p>Consulta institucional de capas territoriales, hidrografía y riesgos del municipio.</p>
         </header>
 
         <div className="sidebar-tools">

@@ -52,15 +52,61 @@ function createPopup(feature, layer, layerConfig) {
   });
 }
 
-function createGeoJsonLayer(layerConfig, geojson) {
-  return L.geoJSON(geojson, {
-    style: {
-      color: layerConfig.color,
-      fillColor: layerConfig.fillColor,
-      weight: layerConfig.weight || 1,
-      fillOpacity: layerConfig.fillOpacity ?? 0.5
+function getLayerStyle(layerConfig) {
+  return {
+    color: layerConfig.color,
+    fillColor: layerConfig.fillColor,
+    fillOpacity: layerConfig.fillOpacity ?? 0.5,
+    lineCap: layerConfig.lineCap,
+    lineJoin: layerConfig.lineJoin,
+    opacity: layerConfig.opacity ?? 0.85,
+    weight: layerConfig.weight || 1
+  };
+}
+
+function getPaneName(layerConfig) {
+  const normalizedLayerName = layerConfig.name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
+
+  return `layer-${normalizedLayerName}`;
+}
+
+function ensureLayerPane(map, layerConfig) {
+  const paneName = getPaneName(layerConfig);
+  const pane = map.getPane(paneName) ?? map.createPane(paneName);
+
+  pane.style.zIndex = String(layerConfig.zIndex ?? 450);
+
+  return paneName;
+}
+
+function createFeatureInteractions(feature, layer, layerConfig) {
+  createPopup(feature, layer, layerConfig);
+
+  if (!layerConfig.hoverStyle || !layer.setStyle) return;
+
+  layer.on({
+    mouseover: () => {
+      layer.setStyle(layerConfig.hoverStyle);
+      layer.bringToFront?.();
     },
-    onEachFeature: (feature, layer) => createPopup(feature, layer, layerConfig)
+    mouseout: () => {
+      layer.setStyle(getLayerStyle(layerConfig));
+    }
+  });
+}
+
+function createGeoJsonLayer(map, layerConfig, geojson) {
+  const paneName = ensureLayerPane(map, layerConfig);
+
+  return L.geoJSON(geojson, {
+    pane: paneName,
+    style: getLayerStyle(layerConfig),
+    onEachFeature: (feature, layer) => createFeatureInteractions(feature, layer, layerConfig)
   });
 }
 
@@ -124,7 +170,7 @@ export function useLayers(mapElementRef, activeBaseMapId) {
 
           if (!mounted) return;
 
-          const leafletLayer = createGeoJsonLayer(layerConfig, geojson);
+          const leafletLayer = createGeoJsonLayer(map, layerConfig, geojson);
           leafletLayersRef.current.set(layerConfig.name, leafletLayer);
 
           if (layerConfig.fixed) {
