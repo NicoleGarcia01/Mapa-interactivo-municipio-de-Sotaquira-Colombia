@@ -132,9 +132,13 @@ function applyLayerVisibility(map, leafletLayers, activeLayers) {
 export function useLayers(mapElementRef, activeBaseMapId) {
   const mapRef = useRef(null);
   const baseLayerRef = useRef(null);
+  const boundaryLayerRef = useRef(null);
   const currentBaseMapIdRef = useRef(null);
   const leafletLayersRef = useRef(new Map());
   const activeLayersRef = useRef(null);
+  const [coordinates, setCoordinates] = useState(null);
+  const [layerLoadErrors, setLayerLoadErrors] = useState([]);
+  const [processedLayerCount, setProcessedLayerCount] = useState(0);
   const [loadedLayerNames, setLoadedLayerNames] = useState(new Set());
   const [activeLayers, setActiveLayers] = useState(createInitialActiveLayers);
 
@@ -154,9 +158,31 @@ export function useLayers(mapElementRef, activeBaseMapId) {
 
     mapRef.current = map;
     setBaseMapLayer(map, baseLayerRef, currentBaseMapIdRef, activeBaseMapId);
+    L.control.scale({
+      imperial: false,
+      metric: true,
+      position: "bottomleft"
+    }).addTo(map);
+
+    const handleMouseMove = event => {
+      setCoordinates({
+        latitude: event.latlng.lat,
+        longitude: event.latlng.lng
+      });
+    };
+
+    const handleMouseOut = () => {
+      setCoordinates(null);
+    };
+
+    map.on("mousemove", handleMouseMove);
+    map.on("mouseout", handleMouseOut);
 
     const loadLayers = async () => {
       let boundaryLayer = null;
+
+      setLayerLoadErrors([]);
+      setProcessedLayerCount(0);
 
       for (const layerConfig of LAYERS_CONFIG) {
         try {
@@ -168,13 +194,14 @@ export function useLayers(mapElementRef, activeBaseMapId) {
 
           const geojson = await response.json();
 
-          if (!mounted) return;
+          if (!mounted) break;
 
           const leafletLayer = createGeoJsonLayer(map, layerConfig, geojson);
           leafletLayersRef.current.set(layerConfig.name, leafletLayer);
 
           if (layerConfig.fixed) {
             boundaryLayer = leafletLayer;
+            boundaryLayerRef.current = leafletLayer;
           }
 
           applyLayerVisibility(map, leafletLayersRef.current, activeLayersRef.current);
@@ -186,6 +213,20 @@ export function useLayers(mapElementRef, activeBaseMapId) {
           });
         } catch (error) {
           console.error(`Error cargando la capa: ${layerConfig.name}`, error);
+
+          if (mounted) {
+            setLayerLoadErrors(previousErrors => [
+              ...previousErrors,
+              {
+                layerName: layerConfig.name,
+                message: error.message
+              }
+            ]);
+          }
+        } finally {
+          if (mounted) {
+            setProcessedLayerCount(previousCount => previousCount + 1);
+          }
         }
       }
 
@@ -203,8 +244,11 @@ export function useLayers(mapElementRef, activeBaseMapId) {
     return () => {
       mounted = false;
       baseLayerRef.current = null;
+      boundaryLayerRef.current = null;
       currentBaseMapIdRef.current = null;
       leafletLayersRef.current.clear();
+      map.off("mousemove", handleMouseMove);
+      map.off("mouseout", handleMouseOut);
       map.remove();
       mapRef.current = null;
     };
@@ -261,12 +305,35 @@ export function useLayers(mapElementRef, activeBaseMapId) {
     mapRef.current?.invalidateSize();
   }, []);
 
+  const centerMap = useCallback(() => {
+    const map = mapRef.current;
+
+    if (!map) return;
+
+    const boundaryLayer = boundaryLayerRef.current;
+
+    if (boundaryLayer && boundaryLayer.getBounds().isValid()) {
+      map.fitBounds(boundaryLayer.getBounds(), {
+        padding: [24, 24]
+      });
+      return;
+    }
+
+    map.setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
+  }, []);
+
   return {
     activeLayers,
     activatePrimaryLayers,
+    centerMap,
+    coordinates,
     deactivateAllLayers,
     invalidateMapSize,
+    isLoadingLayers: processedLayerCount < LAYERS_CONFIG.length,
+    layerLoadErrors,
     loadedLayerNames,
+    processedLayerCount,
+    totalLayerCount: LAYERS_CONFIG.length,
     toggleLayer
   };
 }

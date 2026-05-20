@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { LAYER_GROUPS, LAYERS_CONFIG } from "../config/layersConfig.js";
+import { ActiveLayersCounter } from "./ActiveLayersCounter.jsx";
 import { LayerGroup } from "./LayerGroup.jsx";
 
 const OPTIONAL_LAYERS = LAYERS_CONFIG.filter(layer => !layer.fixed);
@@ -27,6 +28,7 @@ function layerMatchesSearch(layerName, normalizedSearch) {
 export function Sidebar({
   activeLayers,
   collapsed,
+  layers,
   loadedLayerNames,
   onActivatePrimary,
   onDeactivateAll,
@@ -55,8 +57,6 @@ export function Sidebar({
       };
     }).filter(group => group.layers.length > 0);
   }, [hasSearch, normalizedSearch]);
-
-  const activeOptionalCount = OPTIONAL_LAYERS.filter(layer => activeLayers[layer.name]).length;
 
   const toggleGroup = groupId => {
     setExpandedGroups(previousGroups => {
@@ -100,19 +100,29 @@ export function Sidebar({
           </label>
 
           <div className="quick-actions">
-            <button type="button" onClick={onActivatePrimary}>
+            <button
+              title="Activar capas principales"
+              type="button"
+              onClick={onActivatePrimary}
+            >
               Activar principales
             </button>
-            <button type="button" onClick={onDeactivateAll}>
+            <button
+              title="Desactivar capas opcionales"
+              type="button"
+              onClick={onDeactivateAll}
+            >
               Desactivar todas
             </button>
           </div>
+
+          <ActiveLayersCounter activeLayers={activeLayers} layers={layers} />
         </div>
 
         <section className="layer-panel" aria-label="Capas del visor">
           <div className="panel-heading">
             <h2>Capas</h2>
-            <span>{activeOptionalCount}/{OPTIONAL_LAYERS.length} activas</span>
+            <span>{OPTIONAL_LAYERS.length} disponibles</span>
           </div>
 
           <div className="layer-scroll" id="layerList">

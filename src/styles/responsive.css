@@ -76,10 +76,46 @@
     width: min(252px, calc(100vw - 28px));
   }
 
+  .map-controls {
+    left: 14px;
+    top: 298px;
+    width: min(188px, calc(100vw - 28px));
+  }
+
+  .map-control-button {
+    min-height: 40px;
+  }
+
   .legend-panel {
     right: 14px;
     bottom: 24px;
     width: min(270px, calc(100vw - 28px));
+  }
+
+  .coordinates-display {
+    left: 14px;
+    bottom: 42px;
+    max-width: calc(100vw - 28px);
+  }
+
+  .error-notice {
+    left: 14px;
+    right: 14px;
+    top: auto;
+    bottom: 86px;
+    width: auto;
+    transform: none;
+  }
+
+  .info-panel-overlay {
+    align-items: flex-end;
+    justify-content: center;
+    padding: 14px;
+  }
+
+  .info-panel {
+    width: 100%;
+    max-height: calc(100vh - 28px);
   }
 
   .basemap-options {
@@ -145,12 +181,43 @@
   .basemap-selector {
     top: 70px;
     right: 12px;
+    width: min(224px, calc(100vw - 24px));
     padding: 10px;
+  }
+
+  .map-controls {
+    left: 12px;
+    top: 288px;
+    width: min(190px, calc(100vw - 24px));
   }
 
   .legend-panel {
     right: 12px;
     bottom: 18px;
+  }
+
+  .error-notice {
+    left: 12px;
+    right: 12px;
+    bottom: 78px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .loading-card {
+    width: min(270px, calc(100vw - 32px));
+    box-sizing: border-box;
+  }
+
+  .info-panel-header,
+  .info-panel-body {
+    padding: 16px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .coordinates-display {
+    display: none;
   }
 }
 

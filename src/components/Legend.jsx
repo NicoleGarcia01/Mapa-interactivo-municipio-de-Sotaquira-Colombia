@@ -7,8 +7,10 @@ export function Legend({ activeLayers, layers }) {
   return (
     <section className={`legend-panel${collapsed ? " collapsed" : ""}`} aria-label="Leyenda de capas activas">
       <button
+        aria-label={collapsed ? "Mostrar leyenda" : "Ocultar leyenda"}
         aria-expanded={!collapsed}
         className="legend-header"
+        title={collapsed ? "Mostrar leyenda" : "Ocultar leyenda"}
         type="button"
         onClick={() => setCollapsed(previousValue => !previousValue)}
       >

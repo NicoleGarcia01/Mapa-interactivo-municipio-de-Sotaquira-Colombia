@@ -35,6 +35,38 @@
   white-space: nowrap;
 }
 
+.active-layers-counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: var(--radius-md);
+  background: rgba(15, 118, 110, 0.08);
+  color: var(--color-accent-strong);
+  box-sizing: border-box;
+}
+
+.active-layers-counter span {
+  font-size: 12.5px;
+  font-weight: 780;
+}
+
+.active-layers-counter strong {
+  display: inline-grid;
+  min-width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 850;
+  box-shadow: 0 4px 12px rgba(15, 118, 110, 0.12);
+}
+
 .layer-scroll {
   flex: 1 1 auto;
   min-height: 0;

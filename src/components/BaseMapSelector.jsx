@@ -14,6 +14,7 @@ export function BaseMapSelector({ activeBaseMapId, onChangeBaseMap }) {
             aria-pressed={baseMap.id === activeBaseMapId}
             className={baseMap.id === activeBaseMapId ? "active" : ""}
             key={baseMap.id}
+            title={`Usar mapa base ${baseMap.name}`}
             type="button"
             onClick={() => onChangeBaseMap(baseMap.id)}
           >
