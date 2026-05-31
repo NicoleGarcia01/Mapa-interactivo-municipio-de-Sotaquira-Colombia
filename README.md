@@ -105,6 +105,6 @@ Para publicar el contenido de `dist` en la rama `gh-pages`:
 npm run deploy
 ```
 
-## Créditos
+## 
 
 Proyecto desarrollado para la visualización geográfica del municipio de Sotaquirá, Boyacá. Capas cartográficas en formato GeoJSON suministradas como datos locales del visor.
