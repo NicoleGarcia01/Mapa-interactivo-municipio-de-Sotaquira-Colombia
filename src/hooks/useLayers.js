@@ -191,6 +191,29 @@ export function useLayers(mapElementRef, activeBaseMapId) {
 
       for (const layerConfig of LAYERS_CONFIG) {
         try {
+          if (layerConfig.type === "tile") {
+            const paneName = ensureLayerPane(map, layerConfig);
+            const leafletLayer = L.tileLayer(layerConfig.file, {
+              pane: paneName,
+              opacity: layerConfig.opacity ?? 0.8,
+              maxZoom: layerConfig.maxZoom ?? 18,
+              minZoom: layerConfig.minZoom ?? 0,
+              bounds: layerConfig.bounds
+            });
+            
+            leafletLayersRef.current.set(layerConfig.name, leafletLayer);
+            applyLayerVisibility(map, leafletLayersRef.current, activeLayersRef.current);
+            
+            setLoadedLayerNames(previousNames => {
+              const nextNames = new Set(previousNames);
+              nextNames.add(layerConfig.name);
+              return nextNames;
+            });
+            
+            setProcessedLayerCount(previousCount => previousCount + 1);
+            continue;
+          }
+
           const response = await fetch(layerConfig.file);
 
           if (!response.ok) {

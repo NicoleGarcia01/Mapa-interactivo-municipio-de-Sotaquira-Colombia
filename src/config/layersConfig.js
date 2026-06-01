@@ -130,6 +130,11 @@ export const LAYER_GROUPS = [
     id: "agrologicas",
     title: "Capacidad agrológica de suelo",
     accentColor: "#a78bfa"
+  },
+  {
+    id: "satelital",
+    title: "Imágenes satelitales",
+    accentColor: "#059669"
   }
 ];
 
@@ -597,5 +602,18 @@ export const LAYERS_CONFIG = [
     },
     visible: false,
     legendColor: CARTOGRAPHIC_PALETTE.agrological.aluminio.fill
+  },
+  {
+    name: "NDVI Satelital (Vegetación)",
+    group: "satelital",
+    type: "tile",
+    file: dataPath("Satelital/tiles/{z}/{x}/{y}.png"),
+    minZoom: 0,
+    maxZoom: 16,
+    bounds: [[5.68553, -73.4298], [5.91754, -73.0653]],
+    opacity: 0.75,
+    zIndex: 405,
+    visible: false,
+    legendColor: "#059669"
   }
 ];

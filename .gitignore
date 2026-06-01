@@ -13,3 +13,10 @@ vite-dev.*.log
 
 .DS_Store
 Thumbs.db
+
+# MBTiles source files
+*.mbtiles
+
+# Raw unsorted source layers
+public/data/capas nuevas/
+
