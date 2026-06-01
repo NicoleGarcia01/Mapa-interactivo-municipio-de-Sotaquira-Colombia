@@ -513,24 +513,7 @@ export const LAYERS_CONFIG = [
     visible: false,
     legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill
   },
-  {
-    name: "Clase VI: Limitaciones por clima y suelo",
-    group: "agrologicas",
-    file: dataPath("agrologicas/clase_vi_clima_suelo.geojson"),
-    color: CARTOGRAPHIC_PALETTE.agrological.claseVI.stroke,
-    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill,
-    weight: 1.3,
-    opacity: 0.85,
-    fillOpacity: 0.35,
-    zIndex: 438,
-    hoverStyle: {
-      weight: 2.0,
-      opacity: 0.98,
-      fillOpacity: 0.5
-    },
-    visible: false,
-    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill
-  },
+
   {
     name: "Clase VI: Limitaciones por suelo",
     group: "agrologicas",
@@ -549,24 +532,7 @@ export const LAYERS_CONFIG = [
     visible: false,
     legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill
   },
-  {
-    name: "Clase VII: Limitaciones por pendiente y suelo",
-    group: "agrologicas",
-    file: dataPath("agrologicas/clase_vii_pendiente_suelo.geojson"),
-    color: CARTOGRAPHIC_PALETTE.agrological.claseVII.stroke,
-    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseVII.fill,
-    weight: 1.3,
-    opacity: 0.85,
-    fillOpacity: 0.35,
-    zIndex: 442,
-    hoverStyle: {
-      weight: 2.0,
-      opacity: 0.98,
-      fillOpacity: 0.5
-    },
-    visible: false,
-    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVII.fill
-  },
+
   {
     name: "Clase VIII: Tierras de conservación y protección",
     group: "agrologicas",
