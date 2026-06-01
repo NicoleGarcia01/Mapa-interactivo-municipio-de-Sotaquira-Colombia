@@ -64,6 +64,48 @@ export const CARTOGRAPHIC_PALETTE = {
     lowDegradation: {
       stroke: "#ad675f",
       fill: "#d79a91"
+    },
+    laminarErosion: {
+      stroke: "#475569",
+      fill: "#94a3b8"
+    },
+    laminarSurcosErosion: {
+      stroke: "#be123c",
+      fill: "#f43f5e"
+    },
+    terraceoLaminarErosion: {
+      stroke: "#9f1239",
+      fill: "#fda4af"
+    }
+  },
+  agrological: {
+    claseIII: {
+      stroke: "#854d0e",
+      fill: "#ca8a04"
+    },
+    claseIV: {
+      stroke: "#9a3412",
+      fill: "#f97316"
+    },
+    claseV: {
+      stroke: "#0f766e",
+      fill: "#2dd4bf"
+    },
+    claseVI: {
+      stroke: "#991b1b",
+      fill: "#ef4444"
+    },
+    claseVII: {
+      stroke: "#86198f",
+      fill: "#d946ef"
+    },
+    claseVIII: {
+      stroke: "#6b21a8",
+      fill: "#a855f7"
+    },
+    aluminio: {
+      stroke: "#1e3a8a",
+      fill: "#3b82f6"
     }
   }
 };
@@ -83,6 +125,11 @@ export const LAYER_GROUPS = [
     id: "riesgos",
     title: "Riesgos y erosión",
     accentColor: CARTOGRAPHIC_PALETTE.risk.edaphicErosion.fill
+  },
+  {
+    id: "agrologicas",
+    title: "Capacidad agrológica de suelo",
+    accentColor: "#a78bfa"
   }
 ];
 
@@ -332,5 +379,223 @@ export const LAYERS_CONFIG = [
     },
     visible: false,
     legendColor: CARTOGRAPHIC_PALETTE.risk.lowDegradation.fill
+  },
+  // NUEVAS CAPAS DE EROSIÓN DETALLADA (riesgos)
+  {
+    name: "Erosión laminar",
+    group: "riesgos",
+    file: dataPath("riesgos/erosion_laminar.geojson"),
+    color: CARTOGRAPHIC_PALETTE.risk.laminarErosion.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.risk.laminarErosion.fill,
+    weight: 1.25,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 460,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.48
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.risk.laminarErosion.fill
+  },
+  {
+    name: "Erosión laminar y en surcos",
+    group: "riesgos",
+    file: dataPath("riesgos/erosion_laminar_surcos.geojson"),
+    color: CARTOGRAPHIC_PALETTE.risk.laminarSurcosErosion.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.risk.laminarSurcosErosion.fill,
+    weight: 1.35,
+    opacity: 0.88,
+    fillOpacity: 0.38,
+    zIndex: 463,
+    hoverStyle: {
+      weight: 2.1,
+      opacity: 1,
+      fillOpacity: 0.52
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.risk.laminarSurcosErosion.fill
+  },
+  {
+    name: "Erosión por terraceo y laminar",
+    group: "riesgos",
+    file: dataPath("riesgos/erosion_terraceo_laminar.geojson"),
+    color: CARTOGRAPHIC_PALETTE.risk.terraceoLaminarErosion.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.risk.terraceoLaminarErosion.fill,
+    weight: 1.45,
+    opacity: 0.9,
+    fillOpacity: 0.4,
+    zIndex: 465,
+    hoverStyle: {
+      weight: 2.2,
+      opacity: 1,
+      fillOpacity: 0.55
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.risk.terraceoLaminarErosion.fill
+  },
+  // NUEVAS CAPAS DE CAPACIDAD AGROLÓGICA (agrologicas)
+  {
+    name: "Clase III: Suelo y clima",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_iii_suelo_clima.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseIII.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseIII.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 430,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseIII.fill
+  },
+  {
+    name: "Clase IV: Limitaciones por suelo",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_iv_suelo.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseIV.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseIV.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 432,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseIV.fill
+  },
+  {
+    name: "Clase V: Limitaciones hídricas y de suelo",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_v_hidricas_suelo.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseV.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseV.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 434,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseV.fill
+  },
+  {
+    name: "Clase VI: Limitaciones por pendiente y relieve",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_vi_pendiente_suelo.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseVI.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 436,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill
+  },
+  {
+    name: "Clase VI: Limitaciones por clima y suelo",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_vi_clima_suelo.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseVI.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 438,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill
+  },
+  {
+    name: "Clase VI: Limitaciones por suelo",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_vi_suelo.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseVI.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 440,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVI.fill
+  },
+  {
+    name: "Clase VII: Limitaciones por pendiente y suelo",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_vii_pendiente_suelo.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseVII.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseVII.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 442,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVII.fill
+  },
+  {
+    name: "Clase VIII: Tierras de conservación y protección",
+    group: "agrologicas",
+    file: dataPath("agrologicas/clase_viii_conservacion_proteccion.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.claseVIII.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.claseVIII.fill,
+    weight: 1.35,
+    opacity: 0.88,
+    fillOpacity: 0.38,
+    zIndex: 444,
+    hoverStyle: {
+      weight: 2.1,
+      opacity: 1,
+      fillOpacity: 0.52
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.claseVIII.fill
+  },
+  {
+    name: "Limitación por aluminio (Toxicidad)",
+    group: "agrologicas",
+    file: dataPath("agrologicas/limitacion_aluminio.geojson"),
+    color: CARTOGRAPHIC_PALETTE.agrological.aluminio.stroke,
+    fillColor: CARTOGRAPHIC_PALETTE.agrological.aluminio.fill,
+    weight: 1.3,
+    opacity: 0.85,
+    fillOpacity: 0.35,
+    zIndex: 446,
+    hoverStyle: {
+      weight: 2.0,
+      opacity: 0.98,
+      fillOpacity: 0.5
+    },
+    visible: false,
+    legendColor: CARTOGRAPHIC_PALETTE.agrological.aluminio.fill
   }
 ];
